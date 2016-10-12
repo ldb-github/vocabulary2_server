@@ -116,13 +116,14 @@ public class CategoryServlet extends HttpServlet {
 		default:
 			break;
 		}
-
+		System.out.println("-------------response to client-----------");
 		if (result != null) {
 			response.setCharacterEncoding("UTF-8");
 			response.setContentType("text/html;charset=UTF-8");
 			response.getWriter().write(result);
+			System.out.println(result);
 		}
-		System.out.println("-------------response to client-----------");
+		
 	}
 
 	private Category getCategory(HttpServletRequest request, HttpServletResponse response) {

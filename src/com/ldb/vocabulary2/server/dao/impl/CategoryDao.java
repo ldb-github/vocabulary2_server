@@ -59,7 +59,7 @@ public class CategoryDao implements ICategoryDao{
 	@Override
 	public void addCategory(Category category) throws SQLException {
 		String sql = " INSERT INTO CATEGORY(ID, NAME, IMAGE, IMAGEREMOTE, FAVORITECOUNT, WORDCOUNT, " + 
-					 " USERNAME, CREATETIME, TRANSLATION) " + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";  
+					 " USERNAME, CREATETIME, TRANSLATION) " + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) ";  
 		Object[] params = {
 				category.getId(),
 				category.getName(),
@@ -79,7 +79,7 @@ public class CategoryDao implements ICategoryDao{
 	@Override
 	public void addVocabulary(Vocabulary vocabulary) throws SQLException {
 		String sql = " INSERT INTO VOCABULARY(ID, CID, NAME, IMAGE, IMAGEREMOTE, " + 
-				 " USERNAME, CREATETIME, TRANSLATION) " + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) "; // 
+				 " USERNAME, CREATETIME, TRANSLATION) " + " VALUES(?, ?, ?, ?, ?, ?, ?, ?) "; // 
 		Object[] params = {
 				vocabulary.getId(),
 				vocabulary.getCId(),

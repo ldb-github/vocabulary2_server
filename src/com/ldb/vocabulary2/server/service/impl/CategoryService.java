@@ -83,16 +83,16 @@ public class CategoryService implements ICategoryService {
 					JSONArray list = new JSONArray();
 					JSONObject listItem;
 					for (Category category : categories) {
-						listItem = new JSONObject();
-						listItem.put(CommunicationContract.KEY_CATEGORY_ID, category.getId());
-						listItem.put(CommunicationContract.KEY_CATEGORY_NAME, category.getName());
-						listItem.put(CommunicationContract.KEY_CATEGORY_IMAGE, category.getImage());
-						listItem.put(CommunicationContract.KEY_CATEGORY_IMAGE_REMOTE, category.getImageRemote());
-						listItem.put(CommunicationContract.KEY_CATEGORY_FAVORITE_COUNT, category.getFavoriteCount());
-						listItem.put(CommunicationContract.KEY_CATEGORY_WORD_COUNT, category.getWordCount());
-						listItem.put(CommunicationContract.KEY_CATEGORY_CREATER, category.getUsername());
-						listItem.put(CommunicationContract.KEY_CATEGORY_CREATE_TIME, category.getCreateTime());
-						listItem.put(CommunicationContract.KEY_CATEGORY_TRANSLATION, category.getTranslation());
+						listItem = getJsonObjectFrom(category); //new JSONObject();
+//						listItem.put(CommunicationContract.KEY_CATEGORY_ID, category.getId());
+//						listItem.put(CommunicationContract.KEY_CATEGORY_NAME, category.getName());
+//						listItem.put(CommunicationContract.KEY_CATEGORY_IMAGE, category.getImage());
+//						listItem.put(CommunicationContract.KEY_CATEGORY_IMAGE_REMOTE, category.getImageRemote());
+//						listItem.put(CommunicationContract.KEY_CATEGORY_FAVORITE_COUNT, category.getFavoriteCount());
+//						listItem.put(CommunicationContract.KEY_CATEGORY_WORD_COUNT, category.getWordCount());
+//						listItem.put(CommunicationContract.KEY_CATEGORY_CREATER, category.getUsername());
+//						listItem.put(CommunicationContract.KEY_CATEGORY_CREATE_TIME, category.getCreateTime());
+//						listItem.put(CommunicationContract.KEY_CATEGORY_TRANSLATION, category.getTranslation());
 						list.put(listItem);
 					}
 					resultJson.put(CommunicationContract.KEY_CATEGORY_LIST, list);
@@ -277,6 +277,8 @@ public class CategoryService implements ICategoryService {
 		if (isContinue) {
 			try {
 				categoryDao.addCategory(category);
+				JSONObject categoryJson = getJsonObjectFrom(category);
+				resultJson.put(CommunicationContract.KEY_CATEGORY_LIST, categoryJson);
 			} catch (SQLException e) {
 				// TODO 类别添加错误
 				e.printStackTrace();
@@ -386,6 +388,21 @@ public class CategoryService implements ICategoryService {
 		resultJson.put(CommunicationContract.KEY_MESSAGE, message);
 
 		return resultJson.toString();
+	}
+	
+	private JSONObject getJsonObjectFrom(Category category){
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put(CommunicationContract.KEY_CATEGORY_ID, category.getId());
+		jsonObject.put(CommunicationContract.KEY_CATEGORY_NAME, category.getName());
+		jsonObject.put(CommunicationContract.KEY_CATEGORY_IMAGE, category.getImage());
+		jsonObject.put(CommunicationContract.KEY_CATEGORY_IMAGE_REMOTE, category.getImageRemote());
+		jsonObject.put(CommunicationContract.KEY_CATEGORY_FAVORITE_COUNT, category.getFavoriteCount());
+		jsonObject.put(CommunicationContract.KEY_CATEGORY_WORD_COUNT, category.getWordCount());
+		jsonObject.put(CommunicationContract.KEY_CATEGORY_CREATER, category.getUsername());
+		jsonObject.put(CommunicationContract.KEY_CATEGORY_CREATE_TIME, category.getCreateTime());
+		jsonObject.put(CommunicationContract.KEY_CATEGORY_TRANSLATION, category.getTranslation());
+		
+		return jsonObject;
 	}
 
 }
