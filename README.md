@@ -1,0 +1,2 @@
+# vocabulary2_server
+对vocabulary_server改版,结构更加合理
