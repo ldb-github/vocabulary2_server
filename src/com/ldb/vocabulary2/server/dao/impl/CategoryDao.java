@@ -40,7 +40,7 @@ public class CategoryDao implements ICategoryDao{
 		StringBuilder sql = new StringBuilder();
 		sql
 		.append("SELECT ID, NAME, IMAGE, IMAGEREMOTE, FAVORITECOUNT, WORDCOUNT, ")
-		.append("USERNAME, CREATETIME, TRANSLATION FROM (")
+		.append("LANGUAGE, USERNAME, CREATETIME, TRANSLATION FROM (")
 		.append("    SELECT ROWNUM NO, ID, NAME, IMAGE, IMAGEREMOTE, FAVORITECOUNT,")
 		.append("    WORDCOUNT, USERNAME, CREATETIME, TRANSLATION FROM (")
 		.append("        SELECT * FROM CATEGORY ")
@@ -59,7 +59,7 @@ public class CategoryDao implements ICategoryDao{
 	@Override
 	public void addCategory(Category category) throws SQLException {
 		String sql = " INSERT INTO CATEGORY(ID, NAME, IMAGE, IMAGEREMOTE, FAVORITECOUNT, WORDCOUNT, " + 
-					 " USERNAME, CREATETIME, TRANSLATION) " + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) ";  
+					 " LANGUAGE, USERNAME, CREATETIME, TRANSLATION) " + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";  
 		Object[] params = {
 				category.getId(),
 				category.getName(),
@@ -67,6 +67,7 @@ public class CategoryDao implements ICategoryDao{
 				category.getImageRemote(),
 				category.getFavoriteCount(),
 				category.getWordCount(),
+				category.getLanguage(),
 				category.getUsername(),
 				category.getCreateTime(),
 				category.getTranslation()};
@@ -78,31 +79,18 @@ public class CategoryDao implements ICategoryDao{
 	
 	@Override
 	public void addVocabulary(Vocabulary vocabulary) throws SQLException {
-		String sql = " INSERT INTO VOCABULARY(ID, CID, NAME, IMAGE, IMAGEREMOTE, " + 
-				 " USERNAME, CREATETIME, TRANSLATION) " + " VALUES(?, ?, ?, ?, ?, ?, ?, ?) "; // 
+		String sql = " INSERT INTO VOCABULARY(ID, CID, NAME, IMAGE, IMAGEREMOTE, LANGUAGE, " + 
+				 " USERNAME, CREATETIME, TRANSLATION) " + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 		Object[] params = {
 				vocabulary.getId(),
 				vocabulary.getCId(),
 				vocabulary.getName(),
 				vocabulary.getImage(),
 				vocabulary.getImageRemote(),
+				vocabulary.getLanguage(),
 				vocabulary.getUsername(),
 				vocabulary.getCreateTime(),
 				vocabulary.getTranslation()};
-		
-		QueryRunner qr = new QueryRunner();
-		qr.update(JdbcUtil_DBUtils.getConnection(), sql, params);
-	}
-
-	@Override
-	public void addCategoryVocabulary(Vocabulary vocabulary) throws SQLException {
-		String cId = vocabulary.getCId();
-		
-		String sql = " INSERT INTO CATEGORY_VOCABULARY(CID, VID) " + 
-		      " VALUES(?, ?, ?, ?) ";
-		Object[] params = {
-				cId,
-				vocabulary.getId()};
 		
 		QueryRunner qr = new QueryRunner();
 		qr.update(JdbcUtil_DBUtils.getConnection(), sql, params);
@@ -115,8 +103,8 @@ public class CategoryDao implements ICategoryDao{
 		
 		StringBuilder sql = new StringBuilder();
 		sql
-		.append("SELECT ID, NAME, IMAGE, IMAGEREMOTE, USERNAME, CREATETIME, TRANSLATION FROM(")
-		.append("    SELECT ROWNUM NO, ID, NAME, IMAGE, IMAGEREMOTE, USERNAME, CREATETIME, TRANSLATION FROM(")
+		.append("SELECT ID, NAME, IMAGE, IMAGEREMOTE, LANGUAGE, USERNAME, CREATETIME, TRANSLATION FROM(")
+		.append("    SELECT ROWNUM NO, ID, NAME, IMAGE, IMAGEREMOTE, LANGUAGE, USERNAME, CREATETIME, TRANSLATION FROM(")
 		.append("    	SELECT * FROM VOCABULARY WHERE CID = ? ORDER BY ID ")
 		.append("    )")
 		.append(")WHERE NO >= ? AND NO <= ?");

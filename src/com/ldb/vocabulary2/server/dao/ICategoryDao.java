@@ -32,12 +32,6 @@ public interface ICategoryDao {
 	 */
 	void addVocabulary(Vocabulary vocabulary) throws SQLException;
 	/**
-	 * 添加词汇类别与词汇的关系
-	 * @param vocabulary
-	 * @throws SQLException
-	 */
-	void addCategoryVocabulary(Vocabulary vocabulary) throws SQLException;
-	/**
 	 * 获取词汇列表
 	 * @param categoryId 词汇类别id
 	 * @param page

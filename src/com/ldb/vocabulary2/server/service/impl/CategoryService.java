@@ -16,7 +16,6 @@ import org.json.JSONObject;
 
 import com.ldb.util.DateUtils;
 import com.ldb.util.FileOperation;
-import com.ldb.util.jdbc.JdbcUtil_DBUtils;
 import com.ldb.vocabulary2.server.service.ICategoryService;
 import com.ldb.vocabulary2.server.dao.ICategoryDao;
 import com.ldb.vocabulary2.server.dao.ICommonDao;
@@ -138,7 +137,7 @@ public class CategoryService implements ICategoryService {
 					listItem.put(CommunicationContract.KEY_VOCABULARY_ID, vocabulary.getId());
 					listItem.put(CommunicationContract.KEY_VOCABULARY_NAME, vocabulary.getName());
 					listItem.put(CommunicationContract.KEY_VOCABULARY_IMAGE, vocabulary.getImage());
-					listItem.put(CommunicationContract.KEY_VOCABULARY__IMAGE_REMOTE, vocabulary.getImageRemote());
+					listItem.put(CommunicationContract.KEY_VOCABULARY_IMAGE_REMOTE, vocabulary.getImageRemote());
 					listItem.put(CommunicationContract.KEY_VOCABULARY_CREATER, vocabulary.getUsername());
 					listItem.put(CommunicationContract.KEY_VOCABULARY_CREATE_TIME, vocabulary.getCreateTime());
 					listItem.put(CommunicationContract.KEY_VOCABULARY_TRANSLATION, vocabulary.getTranslation());
@@ -361,21 +360,16 @@ public class CategoryService implements ICategoryService {
 		// 往数据库添加词汇类别
 		if (isContinue) {
 			try {
-				JdbcUtil_DBUtils.startTransaction();
 				// 添加词汇
 				categoryDao.addVocabulary(vocabulary);
-				// 添加词汇与类别的关系
-				categoryDao.addCategoryVocabulary(vocabulary);
-				JdbcUtil_DBUtils.commit();
+				JSONObject vocabularyJson = getJsonObjectFrom(vocabulary);
+				resultJson.put(CommunicationContract.KEY_VOCABULARY_LIST, vocabularyJson);
 			} catch (SQLException e) {
-				JdbcUtil_DBUtils.rollback();
 				// TODO 类别添加错误
 				e.printStackTrace();
 				isContinue = false;
 				code = CommunicationContract.VALUE_CODE_DBERROR;
 				message = "数据库请求错误：词汇添加失败";
-			}finally{
-				JdbcUtil_DBUtils.close();
 			}
 		}
 		// 成功
@@ -398,9 +392,25 @@ public class CategoryService implements ICategoryService {
 		jsonObject.put(CommunicationContract.KEY_CATEGORY_IMAGE_REMOTE, category.getImageRemote());
 		jsonObject.put(CommunicationContract.KEY_CATEGORY_FAVORITE_COUNT, category.getFavoriteCount());
 		jsonObject.put(CommunicationContract.KEY_CATEGORY_WORD_COUNT, category.getWordCount());
+		jsonObject.put(CommunicationContract.KEY_CATEGORY_LANGUAGE, category.getLanguage());
 		jsonObject.put(CommunicationContract.KEY_CATEGORY_CREATER, category.getUsername());
 		jsonObject.put(CommunicationContract.KEY_CATEGORY_CREATE_TIME, category.getCreateTime());
 		jsonObject.put(CommunicationContract.KEY_CATEGORY_TRANSLATION, category.getTranslation());
+		
+		return jsonObject;
+	}
+	
+	private JSONObject getJsonObjectFrom(Vocabulary vocabulary){
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put(CommunicationContract.KEY_VOCABULARY_ID, vocabulary.getId());
+		jsonObject.put(CommunicationContract.KEY_VOCABULARY_NAME, vocabulary.getName());
+		jsonObject.put(CommunicationContract.KEY_CATEGORY_ID, vocabulary.getCId());
+		jsonObject.put(CommunicationContract.KEY_VOCABULARY_IMAGE, vocabulary.getImage());
+		jsonObject.put(CommunicationContract.KEY_VOCABULARY_IMAGE_REMOTE, vocabulary.getImageRemote());
+		jsonObject.put(CommunicationContract.KEY_VOCABULARY_LANGUAGE, vocabulary.getLanguage());
+		jsonObject.put(CommunicationContract.KEY_VOCABULARY_CREATER, vocabulary.getUsername());
+		jsonObject.put(CommunicationContract.KEY_VOCABULARY_CREATE_TIME, vocabulary.getCreateTime());
+		jsonObject.put(CommunicationContract.KEY_VOCABULARY_TRANSLATION, vocabulary.getTranslation());
 		
 		return jsonObject;
 	}

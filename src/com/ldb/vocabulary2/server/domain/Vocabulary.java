@@ -10,6 +10,7 @@ public class Vocabulary {
 	private String name;
 	private String image;
 	private String imageRemote;
+	private String language;
 	private String username;
 	private Timestamp createTime;
 	private String translation;
@@ -43,6 +44,12 @@ public class Vocabulary {
 	}
 	public void setImageRemote(String imageRemote) {
 		this.imageRemote = imageRemote;
+	}
+	public String getLanguage() {
+		return language;
+	}
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 	public String getUsername() {
 		return username;

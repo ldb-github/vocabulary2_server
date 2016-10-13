@@ -10,6 +10,7 @@ public class Category {
 	private String imageRemote;
 	private long favoriteCount;
 	private long wordCount;
+	private String language;
 	private String username;
 	private Timestamp createTime;
 	private String translation;
@@ -50,6 +51,12 @@ public class Category {
 	}
 	public void setWordCount(long wordCount) {
 		this.wordCount = wordCount;
+	}
+	public String getLanguage() {
+		return language;
+	}
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 	public String getUsername() {
 		return username;

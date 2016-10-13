@@ -146,6 +146,7 @@ public class CategoryServlet extends HttpServlet {
 			if (!ServletFileUpload.isMultipartContent(request)) {
 				// 按照传统方式获取数据
 				category.setName(request.getParameter(CommunicationContract.KEY_CATEGORY_NAME));
+				category.setTranslation(request.getParameter(CommunicationContract.KEY_CATEGORY_TRANSLATION));
 				category.setUsername(request.getParameter(CommunicationContract.KEY_USERNAME));
 			} else {
 				// 4、使用ServletFileUpload解析器解析上传数据，解析结果返回的是一个List<FileItem>集合，
@@ -160,6 +161,9 @@ public class CategoryServlet extends HttpServlet {
 
 						if (name.equals(CommunicationContract.KEY_CATEGORY_NAME)) {
 							category.setName(value);
+						}
+						if (name.equals(CommunicationContract.KEY_CATEGORY_TRANSLATION)) {
+							category.setTranslation(value);
 						}
 						if (name.equals(CommunicationContract.KEY_USERNAME)) {
 							category.setUsername(value);
@@ -237,6 +241,7 @@ public class CategoryServlet extends HttpServlet {
 				// 按照传统方式获取数据
 				vocabulary.setCId(request.getParameter(CommunicationContract.KEY_CATEGORY_ID));
 				vocabulary.setName(request.getParameter(CommunicationContract.KEY_VOCABULARY_NAME));
+				vocabulary.setTranslation(request.getParameter(CommunicationContract.KEY_VOCABULARY_TRANSLATION));
 				vocabulary.setUsername(request.getParameter(CommunicationContract.KEY_USERNAME));
 			} else {
 				// 4、使用ServletFileUpload解析器解析上传数据，解析结果返回的是一个List<FileItem>集合，
@@ -253,6 +258,9 @@ public class CategoryServlet extends HttpServlet {
 						}
 						if (name.equals(CommunicationContract.KEY_VOCABULARY_NAME)) {
 							vocabulary.setName(value);
+						}
+						if (name.equals(CommunicationContract.KEY_VOCABULARY_TRANSLATION)) {
+							vocabulary.setTranslation(value);
 						}
 						if (name.equals(CommunicationContract.KEY_USERNAME)) {
 							vocabulary.setUsername(value);
