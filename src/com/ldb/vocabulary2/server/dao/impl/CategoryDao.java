@@ -42,7 +42,7 @@ public class CategoryDao implements ICategoryDao{
 		.append("SELECT ID, NAME, IMAGE, IMAGEREMOTE, FAVORITECOUNT, WORDCOUNT, ")
 		.append("LANGUAGE, USERNAME, CREATETIME, TRANSLATION FROM (")
 		.append("    SELECT ROWNUM NO, ID, NAME, IMAGE, IMAGEREMOTE, FAVORITECOUNT,")
-		.append("    WORDCOUNT, USERNAME, CREATETIME, TRANSLATION FROM (")
+		.append("    WORDCOUNT, LANGUAGE, USERNAME, CREATETIME, TRANSLATION FROM (")
 		.append("        SELECT * FROM CATEGORY ")
 		.append(sortStr)
 		.append("    )")
