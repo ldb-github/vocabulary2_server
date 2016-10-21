@@ -122,8 +122,6 @@ public class CategoryService implements ICategoryService {
 		resultJson.put(CommunicationContract.KEY_CODE, CommunicationContract.VALUE_CODE_OK);
 		resultJson.put(CommunicationContract.KEY_MESSAGE, "词汇列表获取成功");
 
-		resultJson.put(CommunicationContract.KEY_CATEGORY_ID, categoryId);
-
 		try {
 			List<Vocabulary> vocabularies = 
 					categoryDao.getVocabularyList(categoryId, page, PAGE_SIZE_VOCABULARY);
@@ -136,6 +134,7 @@ public class CategoryService implements ICategoryService {
 					listItem = new JSONObject();
 					listItem.put(CommunicationContract.KEY_VOCABULARY_ID, vocabulary.getId());
 					listItem.put(CommunicationContract.KEY_VOCABULARY_NAME, vocabulary.getName());
+					listItem.put(CommunicationContract.KEY_CATEGORY_ID, categoryId);
 					listItem.put(CommunicationContract.KEY_VOCABULARY_IMAGE, vocabulary.getImage());
 					listItem.put(CommunicationContract.KEY_VOCABULARY_IMAGE_REMOTE, vocabulary.getImageRemote());
 					listItem.put(CommunicationContract.KEY_VOCABULARY_CREATER, vocabulary.getUsername());

@@ -11,3 +11,6 @@
 
 2016.10.14
 <p>修改CategoryDao bug。</p>
+
+2016.10.21
+<p>修改CategoryService,调整返回的json,在词汇数据中增加词汇分类id,移除词汇数组外层的词汇分类id.</p>
